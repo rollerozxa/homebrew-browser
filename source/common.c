@@ -54,6 +54,7 @@ const DISC_INTERFACE* usb = &__io_usbstorage;
 #define IP_ADDRESS_OLD2 "69.163.186.246"
 
 #define SERVER "hbb1.oscwii.org"
+#define SERVER_BACKUP "hbb2.oscwii.org"
 
 #define UPDATE false
 
@@ -92,7 +93,7 @@ long remote_hb_size = 0;
 char update_text[1000];
 
 bool hostname_ok = true;
-bool codemii_backup = false;
+bool backup = false;
 bool www_passed = false;
 
 int download_in_progress = 0;
@@ -1196,10 +1197,10 @@ static void *run_rating_thread(void *arg) {
 
 	strcat(http_request, " HTTP/1.0\r\nHost: ");
 	if (setting_repo == 0) {
-		if (codemii_backup == false) {
+		if (backup == false) {
 			strcat(http_request, SERVER);
 		} else {
-			strcat(http_request, "www2.codemii.com");
+			strcat(http_request, SERVER_BACKUP);
 		}
 	} else {
 		strcat(http_request, repo_list[setting_repo].domain);
@@ -1301,10 +1302,10 @@ static void *run_update_rating_thread(void *arg) {
 
 	strcat(http_request, " HTTP/1.0\r\nHost: ");
 	if (setting_repo == 0) {
-		if (codemii_backup == false) {
+		if (backup == false) {
 			strcat(http_request, SERVER);
 		} else {
-			strcat(http_request, "www2.codemii.com");
+			strcat(http_request, SERVER_BACKUP);
 		}
 	} else {
 		strcat(http_request, repo_list[setting_repo].domain);
@@ -2740,10 +2741,9 @@ bool check_wifi() {
 	return 1;
 }
 
-void initialise_codemii() {
+void initialise_server() {
 	printf("Requesting IP address of server... ");
 	initializedns();
-	//IP_ADDRESS = getipbynamecached("test");
 	IP_ADDRESS = getipbynamecached(SERVER);
 
 	if (IP_ADDRESS == 0) {
@@ -2754,13 +2754,13 @@ void initialise_codemii() {
 	}
 }
 
-void initialise_codemii_backup() {
-	printf("Requesting IP address of www2.codemii.com... ");
+void initialise_server_backup() {
+	printf("Requesting IP address of backup server... ");
 	hostname_ok = true;
 	if (setting_server == true) {
 		initializedns();
 	}
-	IP_ADDRESS = getipbynamecached("www2.codemii.com");
+	IP_ADDRESS = getipbynamecached(SERVER_BACKUP);
 
 	if (IP_ADDRESS == 0) {
 		printf("Failed, using stored IP address\n");
@@ -3224,10 +3224,10 @@ void add_to_stats() {
 
 	strcat(http_request, " HTTP/1.0\r\nHost: ");
 	if (setting_repo == 0) {
-		if (codemii_backup == false) {
+		if (backup == false) {
 			strcat(http_request, SERVER);
 		} else {
-			strcat(http_request, "www2.codemii.com");
+			strcat(http_request, SERVER_BACKUP);
 		}
 	} else {
 		strcat(http_request, repo_list[setting_repo].domain);
@@ -3255,13 +3255,13 @@ void apps_check() {
 		strcat(http_request, setting_last_boot);
 		//strcat(http_request, " HTTP/1.0\r\n\r\n");
 
-		if (codemii_backup == false) {
-			strcat(http_request," HTTP/1.0\r\nHost: ");
+		strcat(http_request," HTTP/1.0\r\nHost: ");
+		if (backup == false) {
 			strcat(http_request,SERVER);
-			strcat(http_request,"\r\nCache-Control: no-cache\r\n\r\n");
 		} else {
-			strcat(http_request," HTTP/1.0\r\nHost: www2.codemii.com\r\nCache-Control: no-cache\r\n\r\n");
+			strcat(http_request,SERVER_BACKUP);
 		}
+		strcat(http_request,"\r\nCache-Control: no-cache\r\n\r\n");
 
 		write_http_reply(main_server, http_request);
 
@@ -3415,13 +3415,13 @@ void repo_check() {
 	char http_request[1000];
 	strcpy(http_request,"GET /hbb/repo_list.txt");
 
-	if (codemii_backup == false) {
-		strcat(http_request," HTTP/1.0\r\nHost: ");
+	strcat(http_request," HTTP/1.0\r\nHost: ");
+	if (backup == false) {
 		strcat(http_request,SERVER);
-		strcat(http_request,"\r\nCache-Control: no-cache\r\n\r\n");
 	} else {
-		strcat(http_request," HTTP/1.0\r\nHost: www2.codemii.com\r\nCache-Control: no-cache\r\n\r\n");
+		strcat(http_request,SERVER_BACKUP);
 	}
+	strcat(http_request,"\r\nCache-Control: no-cache\r\n\r\n");
 
 	write_http_reply(main_server, http_request);
 
@@ -3869,13 +3869,13 @@ s32 server_connect(int repo_bypass) {
 
 	if (setting_repo == 0 || repo_bypass == 1) {
 		if (hostname_ok == true) {
-			if (codemii_backup == false) {
+			if (backup == false) {
 				connect_addr.sin_addr.s_addr= getipbynamecached(SERVER);
 			} else {
-				connect_addr.sin_addr.s_addr= getipbynamecached("www2.codemii.com");
+				connect_addr.sin_addr.s_addr= getipbynamecached(SERVER_BACKUP);
 			}
 		} else {
-			if (codemii_backup == false) {
+			if (backup == false) {
 				connect_addr.sin_addr.s_addr= inet_addr(IP_ADDRESS_OLD);
 			} else {
 				connect_addr.sin_addr.s_addr= inet_addr(IP_ADDRESS_OLD2);
@@ -4564,10 +4564,10 @@ s32 request_list_file(char *file_path, char *path) {
 		//strcat(http_request, " HTTP/1.0\r\n\r\n");
 		strcat(http_request, " HTTP/1.0\r\nHost: ");
 		if (setting_repo == 0) {
-			if (codemii_backup == false) {
+			if (backup == false) {
 				strcat(http_request, SERVER);
 			} else {
-				strcat(http_request, "www2.codemii.com");
+				strcat(http_request, SERVER_BACKUP);
 			}
 		} else {
 			strcat(http_request, repo_list[setting_repo].domain);
@@ -4663,10 +4663,10 @@ s32 create_and_request_file(char* path1, char* appname, char *filename) {
 		strcat(http_request, filename);
 		strcat(http_request, " HTTP/1.0\r\nHost: ");
 		if (setting_repo == 0) {
-			if (codemii_backup == false) {
+			if (backup == false) {
 				strcat(http_request, SERVER);
 			} else {
-				strcat(http_request, "www2.codemii.com");
+				strcat(http_request, SERVER_BACKUP);
 			}
 		} else {
 			strcat(http_request, repo_list[setting_repo].domain);

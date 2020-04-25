@@ -64,7 +64,7 @@ void initialise_network();
 bool check_wifi();
 extern u32 net_gethostip();
 
-bool codemii_backup;
+bool backup;
 bool www_passed;
 
 int category_old_selection;
@@ -162,8 +162,8 @@ int no_manage_count;
 void download_queue_size();
 void add_to_stats();
 bool check_server();
-void initialise_codemii();
-void initialise_codemii_backup();
+void initialise_server();
+void initialise_server_backup();
 
 s32 write_http_reply(s32 server, char *msg);
 s32 server_connect(int repo_bypass);
