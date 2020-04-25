@@ -1,0 +1,12 @@
+build/
+lib/
+
+*.dol
+*.elf
+
+source/gfx/*.c
+source/gfx/*.h
+source/gfx/raw2c.exe
+source/GRRLIB/
+source/libpng/
+source/unzip/
