@@ -523,7 +523,6 @@ int main(int argc, char **argv) {
 	void *str_setting_cat = GRRLIB_TextToTexture("Custom category", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_sort = GRRLIB_TextToTexture("Custom sort", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_disusb = GRRLIB_TextToTexture("Disable USB mount", FONTSIZE_SMALL1, 0x575757);
-	void *str_setting_dischar = GRRLIB_TextToTexture("Disable character", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_wiiside = GRRLIB_TextToTexture("Use Wiimote sideways", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_update = GRRLIB_TextToTexture("Check for updates", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_server = GRRLIB_TextToTexture("Use secondary server", FONTSIZE_SMALL1, 0x575757);
@@ -546,11 +545,10 @@ int main(int argc, char **argv) {
 	void *str_page1o3 = GRRLIB_TextToTexture("Page 1 / 3", FONTSIZE_SMALLER, 0x666768);
 	void *str_page2o3 = GRRLIB_TextToTexture("Page 2 / 3", FONTSIZE_SMALLER, 0x666768);
 	void *str_page3o3 = GRRLIB_TextToTexture("Page 3 / 3", FONTSIZE_SMALLER, 0x666768);
-	void *str_page1o5 = GRRLIB_TextToTexture("Page 1 / 5", FONTSIZE_SMALLER, 0x666768);
-	void *str_page2o5 = GRRLIB_TextToTexture("Page 2 / 5", FONTSIZE_SMALLER, 0x666768);
-	void *str_page3o5 = GRRLIB_TextToTexture("Page 3 / 5", FONTSIZE_SMALLER, 0x666768);
-	void *str_page4o5 = GRRLIB_TextToTexture("Page 4 / 5", FONTSIZE_SMALLER, 0x666768);
-	void *str_page5o5 = GRRLIB_TextToTexture("Page 5 / 5", FONTSIZE_SMALLER, 0x666768);
+	void *str_page1o4 = GRRLIB_TextToTexture("Page 1 / 4", FONTSIZE_SMALLER, 0x666768);
+	void *str_page2o4 = GRRLIB_TextToTexture("Page 2 / 4", FONTSIZE_SMALLER, 0x666768);
+	void *str_page3o4 = GRRLIB_TextToTexture("Page 3 / 4", FONTSIZE_SMALLER, 0x666768);
+	void *str_page4o4 = GRRLIB_TextToTexture("Page 4 / 4", FONTSIZE_SMALLER, 0x666768);
 	void *str_page1o7 = GRRLIB_TextToTexture("Page 1 / 7", FONTSIZE_SMALLER, 0x666768);
 	void *str_page2o7 = GRRLIB_TextToTexture("Page 2 / 7", FONTSIZE_SMALLER, 0x666768);
 	void *str_page3o7 = GRRLIB_TextToTexture("Page 3 / 7", FONTSIZE_SMALLER, 0x666768);
@@ -579,7 +577,7 @@ int main(int argc, char **argv) {
 	void *str_sort_3 = GRRLIB_TextToTexture("Rating", FONTSIZE_SMALL1, 0x575757);
 	void *str_sort_4 = GRRLIB_TextToTexture("Downloads", FONTSIZE_SMALL1, 0x575757);
 
-	u8 *text_font1=GRRLIB_LoadTexture(GRRLIB_font1);
+	//u8 *text_font1=GRRLIB_LoadTexture(GRRLIB_font1);
 	u8 *mouse_img=GRRLIB_LoadTexture(mouse);
 
 	u8 *about_blank_img=GRRLIB_LoadTexture(about_blank);
@@ -712,7 +710,7 @@ int main(int argc, char **argv) {
 	u8 *apps_repo_img=GRRLIB_LoadTexture(apps_repo);
 	u8 *apps_start_cat_img=GRRLIB_LoadTexture(apps_start_cat);
 	u8 *apps_start_sort_img=GRRLIB_LoadTexture(apps_start_sort);
-	u8 *arrow_img=GRRLIB_LoadTexture(arrow);
+	//u8 *arrow_img=GRRLIB_LoadTexture(arrow);
 
 	u8 *icon1_img = NULL;
 	u8 *icon2_img = NULL;
@@ -3050,10 +3048,8 @@ int main(int argc, char **argv) {
 
 			if (menu_section == 0) {
 
-				if (setting_dischar == false) {
-					if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_menu_img, 0, 1, 1, 255); }
-					else { GRRLIB_DrawImg(0, 275, 252, 208, guy_menu_img, 0, 1, 1, 255); }
-				}
+				if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_menu_img, 0, 1, 1, 255); }
+				else { GRRLIB_DrawImg(0, 275, 252, 208, guy_menu_img, 0, 1, 1, 255); }
 
 				GRRLIB_DrawImg(283, 155, 240, 64, menu_settings_img, 0, 1, 1, 255);
 				if (ir.x > 267 && ir.x < 510 && ir.y > 174 && ir.y < 203) {
@@ -3160,11 +3156,6 @@ int main(int argc, char **argv) {
 						}
 					}
 
-					if (setting_dischar == false) {
-						if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-						else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-					}
-
 					GRRLIB_DrawImg(313, 160, 640, FONTSIZE_SMALL1*2, str_setting_card_space, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(304, 210, 640, FONTSIZE_SMALL1*2, str_setting_free_space, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(285, 260, 640, FONTSIZE_SMALL1*2, str_setting_hide_app, 0, 1.0, 1.0, 255);
@@ -3195,7 +3186,7 @@ int main(int argc, char **argv) {
 						}
 					}
 
-					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page1o5, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page1o4, 0, 1.0, 1.0, 255);
 				} else if (menu_section == 2) {
 					if (ir.x > 250 && ir.x < 530 && ir.y > 146 && ir.y < 188) {
 						doRumble = true;
@@ -3236,11 +3227,6 @@ int main(int argc, char **argv) {
 							if (setting_prompt_cancel == true) { setting_prompt_cancel = false; }
 							else {setting_prompt_cancel = true; }
 						}
-					}
-
-					if (setting_dischar == false) {
-						if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-						else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
 					}
 
 					GRRLIB_DrawImg(399, 160, 640, FONTSIZE_SMALL1*2, str_setting_rumble, 0, 1.0, 1.0, 255);
@@ -3285,7 +3271,7 @@ int main(int argc, char **argv) {
 						}
 					}
 
-					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page2o5, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page2o4, 0, 1.0, 1.0, 255);
 				} else if (menu_section == 3) {
 					if (ir.x > 250 && ir.x < 530 && ir.y > 146 && ir.y < 188 && select_repo == false && select_category == false) {
 						doRumble = true;
@@ -3326,11 +3312,6 @@ int main(int argc, char **argv) {
 							select_category = true;
 							wait_a_press = 10;
 						}
-					}
-
-					if (setting_dischar == false) {
-						if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-						else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
 					}
 
 					GRRLIB_DrawImg(292, 160, 640, FONTSIZE_SMALL1*2, str_setting_power, 0, 1.0, 1.0, 255);
@@ -3374,7 +3355,7 @@ int main(int argc, char **argv) {
 						}
 					}
 
-					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page3o5, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page3o4, 0, 1.0, 1.0, 255);
 				} else if (menu_section == 4) {
 					if (ir.x > 250 && ir.x < 530 && ir.y > 146 && ir.y < 188 && select_sort == false) {
 						doRumble = true;
@@ -3396,54 +3377,46 @@ int main(int argc, char **argv) {
 						doRumble = true;
 						GRRLIB_DrawImg(104, 246, 440, 44, blue_light_small_img, 0, 1, 1, 255);
 						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							if (setting_dischar == true) { setting_dischar = false; }
-							else {setting_dischar = true; }
+							if (setting_wiiside == true) { setting_wiiside = false; }
+							else {setting_wiiside = true; }
 						}
 					}
 					if (ir.x > 250 && ir.x < 530 && ir.y > 296 && ir.y < 338 && select_sort == false) {
 						doRumble = true;
 						GRRLIB_DrawImg(104, 296, 440, 44, blue_light_small_img, 0, 1, 1, 255);
 						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							if (setting_wiiside == true) { setting_wiiside = false; }
-							else {setting_wiiside = true; }
-						}
-					}
-					if (ir.x > 250 && ir.x < 530 && ir.y > 346 && ir.y < 388 && select_sort == false) {
-						doRumble = true;
-						GRRLIB_DrawImg(104, 346, 440, 44, blue_light_small_img, 0, 1, 1, 255);
-						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
 							if (setting_update == true) { setting_update = false; }
 							else {setting_update = true; }
 						}
 					}
-
-					if (setting_dischar == false) {
-						if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-						else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
+					if (ir.x > 250 && ir.x < 530 && ir.y > 346 && ir.y < 388) {
+						doRumble = true;
+						GRRLIB_DrawImg(104, 346, 440, 44, blue_light_small_img, 0, 1, 1, 255);
+						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
+							if (setting_server == true) { setting_server = false; }
+							else {setting_server = true; }
+						}
 					}
 
 					GRRLIB_DrawImg(351, 160, 640, FONTSIZE_SMALL1*2, str_setting_sort, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(282, 210, 640, FONTSIZE_SMALL1*2, str_setting_disusb, 0, 1.0, 1.0, 255);
-					GRRLIB_DrawImg(296, 260, 640, FONTSIZE_SMALL1*2, str_setting_dischar, 0, 1.0, 1.0, 255);
-					GRRLIB_DrawImg(248, 310, 640, FONTSIZE_SMALL1*2, str_setting_wiiside, 0, 1.0, 1.0, 255);
-					GRRLIB_DrawImg(286, 360, 640, FONTSIZE_SMALL1*2, str_setting_update, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(248, 260, 640, FONTSIZE_SMALL1*2, str_setting_wiiside, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(286, 310, 640, FONTSIZE_SMALL1*2, str_setting_update, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(258, 360, 640, FONTSIZE_SMALL1*2, str_setting_server, 0, 1.0, 1.0, 255);
 
 					if (setting_sort == 1) { GRRLIB_DrawImg(498, 148, 40, 40, setting_cross_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 148, 40, 40, app_tick_img, 0, 1, 1, 255); }
 					if (setting_disusb == true) { GRRLIB_DrawImg(498, 198, 40, 40, app_tick_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 198, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					if (setting_dischar == true) { GRRLIB_DrawImg(498, 248, 40, 40, app_tick_img, 0, 1, 1, 255); }
+					if (setting_wiiside == true) { GRRLIB_DrawImg(498, 248, 40, 40, app_tick_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 248, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					if (setting_wiiside == true) { GRRLIB_DrawImg(498, 298, 40, 40, app_tick_img, 0, 1, 1, 255); }
+					if (setting_update == true) { GRRLIB_DrawImg(498, 298, 40, 40, app_tick_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 298, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					if (setting_update == true) { GRRLIB_DrawImg(498, 348, 40, 40, app_tick_img, 0, 1, 1, 255); }
-					else { GRRLIB_DrawImg(498, 348, 40, 40, setting_cross_img, 0, 1, 1, 255); }
+					if (setting_server == false) { GRRLIB_DrawImg(498, 348, 40, 40, setting_cross_img, 0, 1, 1, 255); }
+					else { GRRLIB_DrawImg(498, 348, 40, 40, app_tick_img, 0, 1, 1, 255); }
 
 					if (((pressed & WPAD_BUTTON_MINUS) || (setting_wiiside == false && pressed & WPAD_BUTTON_LEFT) || (pressed_gc & PAD_TRIGGER_L) || (pressed_gc & PAD_BUTTON_LEFT)) && select_sort == false) {
 						menu_section = 3;
-					}
-					if (((pressed & WPAD_BUTTON_PLUS) || (setting_wiiside == false && pressed & WPAD_BUTTON_RIGHT) || (pressed_gc & PAD_TRIGGER_R) || (pressed_gc & PAD_BUTTON_RIGHT)) && select_repo == false && select_category == false) {
-						menu_section = 5;
 					}
 
 					GRRLIB_DrawImg(300, 395, 36, 44, down_clear_img, 90, 1, 1, 255);
@@ -3454,51 +3427,12 @@ int main(int argc, char **argv) {
 							menu_section = 3;
 						}
 					}
-					GRRLIB_DrawImg(452, 395, 36, 44, down_clear_img, 270, 1, 1, 255);
-					if (ir.x > 430 && ir.x < 468 && ir.y > 400 && ir.y < 430 && select_sort == false) {
-						doRumble = true;
-						GRRLIB_DrawImg(452, 395, 36, 44, down_clear_highlight_img, 270, 1, 1, 255);
-						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							menu_section = 5;
-						}
-					}
 
-					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page4o5, 0, 1.0, 1.0, 255);
-				} else if (menu_section == 5) {
-					if (ir.x > 250 && ir.x < 530 && ir.y > 146 && ir.y < 188) {
-						doRumble = true;
-						GRRLIB_DrawImg(104, 146, 440, 44, blue_light_small_img, 0, 1, 1, 255);
-						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							if (setting_server == true) { setting_server = false; }
-							else {setting_server = true; }
-						}
-					}
-
-					if (setting_dischar == false) {
-						if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-						else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
-					}
-
-					GRRLIB_DrawImg(258, 160, 640, FONTSIZE_SMALL1*2, str_setting_server, 0, 1.0, 1.0, 255);
-
-					if (setting_server == false) { GRRLIB_DrawImg(498, 148, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					else { GRRLIB_DrawImg(498, 148, 40, 40, app_tick_img, 0, 1, 1, 255); }
-
-					if (((pressed & WPAD_BUTTON_MINUS) || (setting_wiiside == false && pressed & WPAD_BUTTON_LEFT) || (pressed_gc & PAD_TRIGGER_L) || (pressed_gc & PAD_BUTTON_LEFT)) && select_sort == false) {
-						menu_section = 4;
-					}
-
-					GRRLIB_DrawImg(300, 395, 36, 44, down_clear_img, 90, 1, 1, 255);
-					if (ir.x > 285 && ir.x < 322 && ir.y > 400 && ir.y < 430) {
-						doRumble = true;
-						GRRLIB_DrawImg(300, 395, 36, 44, down_clear_highlight_img, 90, 1, 1, 255);
-						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							menu_section = 4;
-						}
-					}
-
-					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page5o5, 0, 1.0, 1.0, 255);
+					GRRLIB_DrawImg(355, 418, 640, FONTSIZE_SMALLER*2, str_page4o4, 0, 1.0, 1.0, 255);
 				}
+
+				if (xfb_height == 480) { GRRLIB_DrawImg(0, 252, 252, 208, guy_settings_img, 0, 1, 1, 255); }
+				else { GRRLIB_DrawImg(0, 275, 252, 208, guy_settings_img, 0, 1, 1, 255); }
 
 				if ((pressed & WPAD_BUTTON_HOME || ((pressed & WPAD_BUTTON_B || pressed & WPAD_BUTTON_1) && select_repo == false && select_category == false) || pressed_gc & PAD_BUTTON_START || pressed_gc & PAD_BUTTON_B) && wait_a_press == 0) {
 					menu_section = 0;
