@@ -146,7 +146,6 @@ int setting_repo = 0;
 int setting_category = 2;
 int setting_sort = 1;
 bool setting_disusb = false;
-bool setting_dischar = false;
 bool setting_wiiside = false;
 bool setting_update = true;
 bool setting_server = false;
@@ -1648,9 +1647,6 @@ void update_settings() {
 	char set17[1];
 	sprintf(set17, "%i", setting_disusb);
 	mxmlElementSetAttr(data, "setting_disusb", set17);
-	char set18[1];
-	sprintf(set18, "%i", setting_dischar);
-	mxmlElementSetAttr(data, "setting_dischar", set18);
 	char set19[1];
 	sprintf(set19, "%i", setting_wiiside);
 	mxmlElementSetAttr(data, "setting_wiiside", set19);
@@ -1804,9 +1800,6 @@ void load_settings() {
 			}
 			if (mxmlElementGetAttr(data,"setting_disusb")) {
 				setting_disusb = atoi(mxmlElementGetAttr(data,"setting_disusb"));
-			}
-			if (mxmlElementGetAttr(data,"setting_dischar")) {
-				setting_dischar = atoi(mxmlElementGetAttr(data,"setting_dischar"));
 			}
 			if (mxmlElementGetAttr(data,"setting_wiiside")) {
 				setting_wiiside = atoi(mxmlElementGetAttr(data,"setting_wiiside"));

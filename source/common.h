@@ -113,7 +113,6 @@ int setting_repo;
 int setting_sort;
 int setting_category;
 bool setting_disusb;
-bool setting_dischar;
 bool setting_wiiside;
 bool setting_update;
 bool setting_server;
