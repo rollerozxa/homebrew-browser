@@ -839,13 +839,11 @@ int main(int argc, char **argv) {
 				icons_loaded++;
 
 				if (homebrew_list[c].file_found == 0 || homebrew_list[c].file_found == 2) {
-
 					if (homebrew_list[c].file_found == 0) {
 						// Check image file size
-						char img_path[100] = "sd:/apps/homebrew_browser/temp/";
-						if (setting_use_sd == false) {
-							strcpy(img_path,"usb:/apps/homebrew_browser/temp/");
-						}
+						char img_path[100];
+						strcpy(img_path, rootdir);
+						strcat(img_path, "apps/homebrew_browser/temp/");
 						strcat(img_path, homebrew_list[c].name);
 						strcat(img_path, ".png");
 
@@ -906,7 +904,6 @@ int main(int argc, char **argv) {
 								free(text_list[a].str_name);
 								free(text_list[a].str_short_description);
 							}
-
 						}
 					}
 
@@ -919,10 +916,8 @@ int main(int argc, char **argv) {
 								free(text_list[a].str_name);
 								free(text_list[a].str_short_description);
 							}
-
 						}
 					}
-
 				}
 			}
 
@@ -1944,7 +1939,6 @@ int main(int argc, char **argv) {
 				cancel_confirmed = false;
 			}
 		}
-
 
 		// About
 		if (hbb_app_about == true && updating == -1 && in_menu == false && in_help == false) {
@@ -3656,23 +3650,13 @@ int main(int argc, char **argv) {
 		if (setting_sd_card == true && sd_card_update == true) {
 			WPAD_Rumble(WPAD_CHAN_0, 0);
 			struct statvfs fiData;
-			if (setting_use_sd == true) {
-				if (statvfs("sd:/",&fiData) < 0) {
-					//snprintf(diskinfo, sizeof(diskinfo)-1, "Free space: Unknown");
-				} else {
-					sd_card_free = fiData.f_bfree;
-					sd_card_free = round(sd_card_free * fiData.f_bsize);
-					sd_card_free = sd_card_free / 1000 / 1000;
-					sd_card_free = 6874;
-				}
-			} else if (setting_use_sd == false) {
-				if (statvfs("usb:/",&fiData) < 0) {
-					//snprintf(diskinfo, sizeof(diskinfo)-1, "Free space: Unknown");
-				} else {
-					sd_card_free = fiData.f_bfree;
-					sd_card_free = round(sd_card_free * fiData.f_bsize);
-					sd_card_free = sd_card_free / 1000 / 1000;
-				}
+			if (statvfs(rootdir, &fiData) < 0) {
+				//snprintf(diskinfo, sizeof(diskinfo)-1, "Free space: Unknown");
+			} else {
+				sd_card_free = fiData.f_bfree;
+				sd_card_free = round(sd_card_free * fiData.f_bsize);
+				sd_card_free = sd_card_free / 1000 / 1000;
+				sd_card_free = 6874;
 			}
 
 			if (free_sd_size == true) {
@@ -3681,7 +3665,7 @@ int main(int argc, char **argv) {
 			}
 
 			char temp[50];
-			sprintf (temp, "%lli MB Free", sd_card_free);
+			sprintf(temp, "%lli MB Free", sd_card_free);
 
 			str_sd_card = GRRLIB_TextToTexture(temp, FONTSIZE_SMALLER, 0x9d9d9d);
 			sd_card_update = false;
@@ -3862,7 +3846,6 @@ int main(int argc, char **argv) {
 			GRRLIB_Stop();
 			SYS_ResetSystem(HWButton, 0, 0);
 		}
-
 	}
 
 	return 0;

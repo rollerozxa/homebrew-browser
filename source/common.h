@@ -45,7 +45,6 @@ void initialise_mod_music();
 void stop_mod_music();
 void play_mod_music();
 
-void testing();
 void suspend_reset_thread();
 void suspend_www_thread();
 void die(char *msg);
