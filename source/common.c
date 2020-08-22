@@ -56,6 +56,7 @@ const DISC_INTERFACE* usb = &__io_usbstorage;
 #define SERVER "hbb1.oscwii.org"
 #define SERVER_BACKUP "hbb2.oscwii.org"
 
+// updates disabled for the time being as OSC has the original version
 #define UPDATE false
 
 //#define IP_ADDRESS "192.168.1.1"
@@ -148,7 +149,6 @@ int setting_sort = 1;
 bool setting_disusb = false;
 bool setting_wiiside = false;
 bool setting_update = true;
-bool setting_server = false;
 
 bool setting_repo_revert = false;
 bool cancel_confirmed = false;
@@ -211,7 +211,7 @@ static void *run_reset_thread(void *arg) {
 		if (WPAD_ButtonsHeld(0) & WPAD_BUTTON_2 || PAD_ButtonsDown(0) & PAD_BUTTON_X) {
 			setting_repo_revert = true;
 			setting_repo = 0;
-			printf("\nReverting to CodeMii.com repository.\n");
+			printf("\nReverting to primary repository.\n");
 		}
 		if (WPAD_ButtonsHeld(0) & WPAD_BUTTON_B || PAD_ButtonsDown(0) & PAD_BUTTON_B) {
 			cancel_download = true;
@@ -1653,9 +1653,6 @@ void update_settings() {
 	char set20[1];
 	sprintf(set20, "%i", setting_update);
 	mxmlElementSetAttr(data, "setting_update", set20);
-	char set21[1];
-	sprintf(set21, "%i", setting_server);
-	mxmlElementSetAttr(data, "setting_server", set21);
 
 	FILE *fp = fopen("sd:/apps/homebrew_browser/settings.xml", "wb");
 	FILE *fp1 = fopen("usb:/apps/homebrew_browser/settings.xml", "wb");
@@ -1807,9 +1804,6 @@ void load_settings() {
 			if (mxmlElementGetAttr(data,"setting_update")) {
 				setting_update = atoi(mxmlElementGetAttr(data,"setting_update"));
 			}
-			if (mxmlElementGetAttr(data,"setting_server")) {
-				setting_server = atoi(mxmlElementGetAttr(data,"setting_server"));
-			}
 
 			mxmlDelete(data);
 			mxmlDelete(tree);
@@ -1839,7 +1833,7 @@ void load_settings() {
 	}
 	fclose(fp);
 
-	// Setting repo revert to codemii
+	// Setting repo revert to primary
 	if (setting_repo_revert == true) {
 		setting_repo = 0;
 	}
@@ -2938,8 +2932,6 @@ void download_queue_size() {
 
 // Check if icon.png or meta.xml is missing and if so download them
 void check_missing_files() {
-	if (!UPDATE) return;
-
 	FILE *f;
 	FILE *f1;
 	FILE *f2;
@@ -3322,7 +3314,7 @@ void repo_check() {
 		// Now check which server to use
 		if (setting_repo != 0) {
 			printf("Using repository: %s\n", repo_list[setting_repo].name);
-			printf("Press Wiimote '2' or Gamecube 'X' button to revert to the CodeMii Repo\n\n");
+			printf("Press Wiimote '2' or Gamecube 'X' button to revert to the primary repository\n\n");
 		}
 	} else if (count == 0) {
 		printf("Failed to receive Repositories list.\n");

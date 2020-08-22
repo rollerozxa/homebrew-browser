@@ -270,7 +270,7 @@ int main(int argc, char **argv) {
 	load_settings();
 	//load_no_manage_list();
 
-	if (setting_online == true && setting_server == false) {
+	if (setting_online == true) {
 		initialise_server();
 		printf("Attempting to connect to server... ");
 		int main_retries = 0;
@@ -320,36 +320,6 @@ int main(int argc, char **argv) {
 
 		printf("Connection established\n");
 		//while (check_server() != true); Removed server check, there was no real protection
-		repo_check();
-	} else if (setting_server == true) { // Secondary server setting enabled
-		backup = true;
-		initialise_server_backup();
-		printf("Attempting to connect to backup server... ");
-
-		int main_retries = 0;
-		while (www_passed != true && main_retries < 3) {
-			initialise_www();
-			int retries = 0;
-			while (www_passed != true && retries < 5) {
-				sleep(1);
-				retries++;
-			}
-			if (www_passed == false) {
-				printf("Failed, retrying... \n");
-
-			}
-			main_retries++;
-			suspend_www_thread();
-		}
-
-		suspend_www_thread();
-
-		if (www_passed == false) {
-			die("\nReturning you back to HBC. Please check to see if the backup server is working.\n");
-		}
-
-		printf("Connection established\n");
-		//while (check_server() != true); Removed server check, no real protection.
 		repo_check();
 	}
 
@@ -525,7 +495,6 @@ int main(int argc, char **argv) {
 	void *str_setting_disusb = GRRLIB_TextToTexture("Disable USB mount", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_wiiside = GRRLIB_TextToTexture("Use Wiimote sideways", FONTSIZE_SMALL1, 0x575757);
 	void *str_setting_update = GRRLIB_TextToTexture("Check for updates", FONTSIZE_SMALL1, 0x575757);
-	void *str_setting_server = GRRLIB_TextToTexture("Use secondary server", FONTSIZE_SMALL1, 0x575757);
 
 	// Settings
 	void *str_help_about = GRRLIB_TextToTexture("About / Credits", FONTSIZE_SMALL1, 0x575757);
@@ -3383,20 +3352,11 @@ int main(int argc, char **argv) {
 							else {setting_update = true; }
 						}
 					}
-					if (ir.x > 250 && ir.x < 530 && ir.y > 346 && ir.y < 388) {
-						doRumble = true;
-						GRRLIB_DrawImg(104, 346, 440, 44, blue_light_small_img, 0, 1, 1, 255);
-						if (pressed & WPAD_BUTTON_A || pressed & WPAD_BUTTON_2 || pressed_gc & PAD_BUTTON_A) {
-							if (setting_server == true) { setting_server = false; }
-							else {setting_server = true; }
-						}
-					}
 
 					GRRLIB_DrawImg(351, 160, 640, FONTSIZE_SMALL1*2, str_setting_sort, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(282, 210, 640, FONTSIZE_SMALL1*2, str_setting_disusb, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(248, 260, 640, FONTSIZE_SMALL1*2, str_setting_wiiside, 0, 1.0, 1.0, 255);
 					GRRLIB_DrawImg(286, 310, 640, FONTSIZE_SMALL1*2, str_setting_update, 0, 1.0, 1.0, 255);
-					GRRLIB_DrawImg(258, 360, 640, FONTSIZE_SMALL1*2, str_setting_server, 0, 1.0, 1.0, 255);
 
 					if (setting_sort == 1) { GRRLIB_DrawImg(498, 148, 40, 40, setting_cross_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 148, 40, 40, app_tick_img, 0, 1, 1, 255); }
@@ -3406,8 +3366,6 @@ int main(int argc, char **argv) {
 					else { GRRLIB_DrawImg(498, 248, 40, 40, setting_cross_img, 0, 1, 1, 255); }
 					if (setting_update == true) { GRRLIB_DrawImg(498, 298, 40, 40, app_tick_img, 0, 1, 1, 255); }
 					else { GRRLIB_DrawImg(498, 298, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					if (setting_server == false) { GRRLIB_DrawImg(498, 348, 40, 40, setting_cross_img, 0, 1, 1, 255); }
-					else { GRRLIB_DrawImg(498, 348, 40, 40, app_tick_img, 0, 1, 1, 255); }
 
 					if (((pressed & WPAD_BUTTON_MINUS) || (setting_wiiside == false && pressed & WPAD_BUTTON_LEFT) || (pressed_gc & PAD_TRIGGER_L) || (pressed_gc & PAD_BUTTON_LEFT)) && select_sort == false) {
 						menu_section = 3;
